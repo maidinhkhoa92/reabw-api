@@ -1,57 +1,65 @@
 const property = require('../../services/property')
-const { validationResult } = require('./validate')
+const { validationResult } = require("express-validator");
 
-module.exports.create = async( req, res ) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   res.status(401).send({ errors: errors.array() });
-    //   return;
-    // }
-    try {
-        const data = await property.create(req.body);
-        res.status(200).send(data);
-      } catch (err) {
-        next(err);
-      }
+module.exports.create = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(401).send({ errors: errors.array() });
+    return;
+  }
+  try {
+    // get id of agent
+    const { id } = req.decoded;
+
+    const params = {
+      ...req.body,
+      user: id // add user in property
+    }
+
+    const data = await property.create(params);
+    res.status(200).send(data);
+  } catch (err) {
+    next(err);
+  }
 }
 
-module.exports.list = async( req, res ) => {
-  const id = req.params.idAgency
+module.exports.list = async (req, res, next) => {
   try {
-      const data = await property.list(id);
-      res.status(200).send(data);
-    } catch (err) {
-      next(err);
-    }
+    const data = await property.list(req.query);
+    res.status(200).send(data);
+  } catch (err) {
+    next(err);
+  }
 }
 
-module.exports.detail = async( req, res ) => {
-  const id = req.params.idProperty
+module.exports.detail = async (req, res, next) => {
   try {
-      const data = await property.detail(id);
-      res.status(200).send(data);
-    } catch (err) {
-      next(err);
-    }
+    // get property id
+    const { id } = req.params
+
+    const data = await property.detail(id);
+    res.status(200).send(data);
+  } catch (err) {
+    next(err);
+  }
 }
 
-module.exports.update = async( req, res ) => {
-  const id = req.params.idProperty
-  const body = req.body
+module.exports.update = async (req, res, next) => {
   try {
-      const data = await property.update(id, body);
-      res.status(200).send(data);
-    } catch (err) {
-      next(err);
-    }
+    const { id } = req.params;
+    const data = await property.update(id, req.body);
+    res.status(200).send(data);
+  } catch (err) {
+    next(err);
+  }
 }
 
-module.exports.delete = async( req, res ) => {
-  const id = req.params.idProperty
+module.exports.delete = async (req, res, next) => {
   try {
-      const data = await property.delete(id);
-      res.status(200).send(data);
-    } catch (err) {
-      next(err);
-    }
+    const { id } = req.params
+    const data = await property.delete(id);
+    res.status(200).send({ message: 'Successfully'});
+  } catch (err) {
+    next(err);
+  }
 }

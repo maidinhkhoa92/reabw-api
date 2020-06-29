@@ -4,19 +4,24 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  name: { type: String, default: "" },
-  description: { type: String, default: "" },
+  address: { type: String, default: "" },
+  district: { type: String, default: "" },
   price: { type: Number, default: "" },
+  area: { type: Number, default: "" },
   bedRoom: { type: Number, default: "" },
   bathRoom: { type: Number, default: "" },
-  area: { type: Number, default: "" },
-  city: { type: String, default: "" },
-  district: { type: String, default: "" },
-  photo: { type: Number, default: "" },
-  agency: { type: Schema.Types.ObjectId, ref: "user" },
+  photos: { type: Array },
+  description: { type: String, default: "" },
+  user: { type: Schema.Types.ObjectId, ref: "user" },
+  kind: {
+    type: String,
+    enum: ["house", "apartment"],
+    required: true,
+    default: "house"
+  },
   type: {
     type: String,
-    enum: ["sale", "rent", "particular"],
+    enum: ["sale", "rent"],
     required: true,
     default: "sale"
   },
@@ -36,4 +41,4 @@ schema
   })
   .plugin(mongoosePaginate);
 
-module.exports = mongoose.model("properties", schema);
+module.exports = mongoose.model("property", schema);

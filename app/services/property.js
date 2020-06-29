@@ -1,4 +1,5 @@
 const Property = require('../models/property');
+const _ = require('lodash');
 
 module.exports.create = body => {
     return new Promise(( resolve, reject) => {
@@ -10,11 +11,12 @@ module.exports.create = body => {
     })
 }
 
-module.exports.list = (id) => {
+module.exports.list = query => {
     return new Promise((resolve, reject) => {
-        Property.find({ agency: id}, (err, data) => {
+        // find properties by user
+        Property.find(query, (err, data) => {
             if (err) return reject(err);
-                resolve(convertData(data))
+                resolve(_.map(data, item => convertData(item)))
           }
         )
     })
