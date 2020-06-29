@@ -14,4 +14,13 @@ router.post("/reset-password", Token, userValidate.resetPassword, user.resetPass
 // add agent in agency
 router.post("/agency/agent", userValidate.addingAgent, user.addingAgent);
 
+// add property
+const property = require("./property")
+const propertyValidate = require("./property/validate");
+router.post("/agency/property", propertyValidate.create, property.create)
+router.get("/agency/:idAgency", property.list)
+router.get("/property/:idProperty", property.detail)
+router.put("/property/:idProperty", propertyValidate.create, property.update)
+router.delete("/property/:idProperty", property.delete)
+
 module.exports = router;
