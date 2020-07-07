@@ -138,3 +138,24 @@ module.exports.resetPassword = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.list = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(401).send({ errors: errors.array() });
+    return;
+  }
+
+  try {
+    const { id } = req.decoded;
+
+    const query = {
+      agency: id,
+    };
+
+    const data = await user.list(query);
+    res.status(200).send(data);
+  } catch (err) {
+    next(err);
+  }
+};

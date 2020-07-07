@@ -184,6 +184,20 @@ module.exports.forgotPassword = email => {
   });
 };
 
+module.exports.list = query => {
+  return new Promise((resolve, reject) => {
+    let userQuery = user.find(query)
+    
+    userQuery.exec(query, (err, res) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(res.map(item => convertData(item)));
+    });
+  });
+};
+
 const convertData = (data, password = true) => {
   var result = data;
   if (data === null || data === undefined) {

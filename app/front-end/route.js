@@ -11,7 +11,8 @@ router.post("/login", userValidate.login, user.login);
 router.post("/forgot-password", userValidate.forgotPassword, user.forgotPassword);
 router.post("/reset-password", Token, userValidate.resetPassword, user.resetPassword);
 
-// add agent in agency
+// Agency get list and create agent
+router.get("/agency/agent", Token, user.list);
 router.post("/agency/agent", Token, userValidate.addingAgent, user.addingAgent);
 
 // add property
