@@ -24,4 +24,7 @@ router.get("/property/:id", property.detail)
 router.put("/property/:id", Token, propertyValidate.create, propertyValidate.create, property.update)
 router.delete("/property/:id", Token, propertyValidate.create, property.delete)
 
+const dialogflow = require("./dialogflow");
+router.post("/dialogflow", dialogflow);
+
 module.exports = router;
