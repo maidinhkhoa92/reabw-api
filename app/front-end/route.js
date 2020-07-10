@@ -30,10 +30,10 @@ router.post("/dialogflow", dialogflow);
 // add property
 const property = require("./property")
 const propertyValidate = require("./property/validate");
-router.post("/agency/property", propertyValidate.create, property.create)
-router.get("/agency/:idAgency", property.list)
-router.get("/property/:idProperty", property.detail)
-router.put("/property/:idProperty", propertyValidate.create, property.update)
-router.delete("/property/:idProperty", property.delete)
+router.post("/property", Token, propertyValidate.create, property.create)
+router.get("/property", property.list)
+router.get("/property/:id", property.detail)
+router.put("/property/:id", Token, propertyValidate.create, propertyValidate.create, property.update)
+router.delete("/property/:id", Token, propertyValidate.create, property.delete)
 
 module.exports = router;
