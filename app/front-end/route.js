@@ -28,8 +28,6 @@ const dialogflow = require("./dialogflow");
 router.post("/dialogflow", dialogflow);
 
 // add property
-const property = require("./property")
-const propertyValidate = require("./property/validate");
 router.post("/property", Token, propertyValidate.create, property.create)
 router.get("/property", property.list)
 router.get("/property/:id", property.detail)
