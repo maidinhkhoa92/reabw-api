@@ -41,4 +41,4 @@ schema
   })
   .plugin(mongoosePaginate);
 
-module.exports = mongoose.model("property", schema);
+module.exports = mongoose.model("properties", schema);
