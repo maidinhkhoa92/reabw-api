@@ -12,6 +12,8 @@ const schema = new Schema({
   fName: { type: String, default: "" },
   lName: { type: String, default: "" },
   telephone: { type: String, default: "" },
+  photo: { type: String, default: "" },
+  rate: { type: Number, default: "" },
   agency: { type: Schema.Types.ObjectId, ref: "user" },
   type: {
     type: String,
