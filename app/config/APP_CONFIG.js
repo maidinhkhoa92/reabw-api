@@ -13,7 +13,8 @@ module.exports = {
       pass: "rslguioniyspbcrj"
     }
   },
-  adminEmail: "maidinhkhoa92@gmail.com",
+  // adminEmail: "maidinhkhoa92@gmail.com",
+  adminEmail: "danhmd1997@gmail.com",
   firebase: {
     apiKey: "AIzaSyDNzZis7J30BJSm479iLYAvDKh_co4EFOs",
     authDomain: "https://accounts.google.com/o/oauth2/auth",
@@ -21,9 +22,9 @@ module.exports = {
     projectId: "childschool-webapp"
   },
   site_url: "https://starmy-agent.web.app",
-  registerWebAppUrl: "https://starmy-agent.web.app/register",
+  registerWebAppUrl: "https://reabw-1-esp-e4b5b.web.app/register",
   uploadUrl: "http://127.0.0.1:8081/",
-  resetPasswordUrl: "http://localhost:9000/reset-password/",
+  resetPasswordUrl: "https://reabw-1-esp-e4b5b.web.app/reset-password/",
   token: "token_starmyurget",
   discount: (numberAgent) => {
     if(numberAgent >= 2 && numberAgent <= 5) {

@@ -128,7 +128,6 @@ module.exports.resetPassword = async (req, res, next) => {
   try {
     const { password } = req.body;
     const { email } = req.decoded;
-
     const User = await user.find({ email });
 
     const data = await user.update(User.id, {password});
