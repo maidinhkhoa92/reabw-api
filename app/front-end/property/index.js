@@ -36,8 +36,9 @@ module.exports.detail = async (req, res, next) => {
   try {
     // get property id
     const { id } = req.params
-
-    const data = await property.detail(id);
+    // ser user to populate
+    const isUser = req.query.user
+    const data = await property.detail(id, isUser);
     res.status(200).send(data);
   } catch (err) {
     next(err);
