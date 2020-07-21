@@ -20,7 +20,7 @@ module.exports.create = (body) => {
 module.exports.find = (query, isPopulate = false) => {
   return new Promise((resolve, reject) => {
     let userQuery = contact.findOne({email: query})
-    if (isPopulate) {
+    if (!isPopulate) {
       userQuery = userQuery.populate('property')
     } 
     userQuery.exec((err, res) => {
