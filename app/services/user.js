@@ -198,6 +198,24 @@ module.exports.list = query => {
   });
 };
 
+module.exports.update = (id, body) => {
+  return new Promise((resolve, reject) => {
+    user.findByIdAndUpdate(id, body, { new: true }, (err, data) => {
+      if (err) return reject(err);
+      resolve(convertData(data));
+    });
+  });
+};
+
+module.exports.delete = (id) => {
+  return new Promise((resolve, reject) => {
+    user.findByIdAndDelete(id, (err, data) => {
+      if (err) return reject(err);
+      resolve(convertData(data));
+    });
+  });
+};
+
 const convertData = (data, password = true) => {
   var result = data;
   if (data === null || data === undefined) {

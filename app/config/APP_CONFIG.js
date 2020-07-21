@@ -14,7 +14,7 @@ module.exports = {
     },
   },
   // adminEmail: "maidinhkhoa92@gmail.com",
-  adminEmail: "danhmd1997@gmail.com",
+  adminEmail: "danhmd19917@gmail.com",
   firebase: {
     apiKey: "AIzaSyDNzZis7J30BJSm479iLYAvDKh_co4EFOs",
     authDomain: "https://accounts.google.com/o/oauth2/auth",

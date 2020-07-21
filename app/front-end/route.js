@@ -14,6 +14,9 @@ router.post("/reset-password", Token, userValidate.resetPassword, user.resetPass
 // Agency get list and create agent
 router.get("/agency/agent", Token, user.list);
 router.post("/agency/agent", Token, userValidate.addingAgent, user.addingAgent);
+router.put("/agency/agent/:id", Token, userValidate.addingAgent, user.update)
+router.delete("/agency/agent/:id", Token, user.delete)
+
 
 // add property
 const property = require("./property")
@@ -21,8 +24,14 @@ const propertyValidate = require("./property/validate");
 router.post("/property", Token, propertyValidate.create, property.create)
 router.get("/property", property.list)
 router.get("/property/:id", property.detail)
-router.put("/property/:id", Token, propertyValidate.create, propertyValidate.create, property.update)
-router.delete("/property/:id", Token, propertyValidate.create, property.delete)
+router.put("/property/:id", Token, propertyValidate.create, property.update)
+router.delete("/property/:id", Token, property.delete)
+
+// contact
+const contact = require("./contact");
+const contactValidate = require("./contact/validate");
+router.post("/contact", contactValidate.findOne, contact.findOne)
+
 
 const dialogflow = require("./dialogflow");
 router.post("/dialogflow", dialogflow);

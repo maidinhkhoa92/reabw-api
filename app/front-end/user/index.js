@@ -158,3 +158,23 @@ module.exports.list = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.update = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = await user.update(id, req.body);
+    res.status(200).send(data);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports.delete = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const data = await user.delete(id);
+    res.status(200).send({ message: 'Successfully'});
+  } catch (err) {
+    next(err);
+  }
+}
