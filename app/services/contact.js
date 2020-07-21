@@ -20,7 +20,7 @@ module.exports.create = (body) => {
 module.exports.find = (query, isPopulate = false) => {
   return new Promise((resolve, reject) => {
     let userQuery = contact.findOne({email: query})
-    if (!isPopulate) {
+    if (isPopulate) {
       userQuery = userQuery.populate('property')
     } 
     userQuery.exec((err, res) => {
@@ -48,20 +48,7 @@ module.exports.sendEmail = (body, property) => {
         reject({ code: 11 });
         return;
       } 
-        // send email to Admin
-        const mailOptionToAdmin = {
-          from: body.email,
-          to: APP_CONFIG.adminEmail,
-          subject: "New user",
-          html: "222",
-        };
-        transporter.sendMail(mailOptionToAdmin, function (e, data) {
-          if (e) {
-            reject({ code: 11 });
-            return;
-          }
-          resolve(convertData(data));
-      });
+      resolve(convertData(body));
     });
   });
 };
