@@ -8,56 +8,32 @@ module.exports.create = async (req, res, next) => {
     return;
   }
   try {
-    const data = {
-      property: req.body.property, 
-      user: req.query.user
+    const property = { property: req.body.property}
+    const user = { user: req.body.user}
+    const Exitproperty = await like.detail(property);
+    const Exituser = await like.detail(user);
+    // if user and property is existed. Delete.
+    if (Exitproperty && Exituser) {
+      await like.delete(Exitproperty.id)
+      res.status(200).send();
+    } else {
+      const param = await like.create(req.body);
+      res.status(200).send(param);
     }
-    console.log(data)
-    // const data = await like.create(req.body);
-    res.status(200).send(data);
   } catch (err) {
     next(err);
   }
 }
-
 module.exports.list = async (req, res, next) => {
-  try {
-    const data = await like.list(req.query);
-    res.status(200).send(data);
-  } catch (err) {
-    next(err);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(401).send({ errors: errors.array() });
+    return;
   }
-}
-
-module.exports.detail = async (req, res, next) => {
   try {
-    // get like id
-    const { id } = req.params
-    // ser user to populate
-    const isUser = req.query.user
-    const data = await like.detail(id, isUser);
-    res.status(200).send(data);
-  } catch (err) {
-    next(err);
-  }
-}
-
-module.exports.update = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const data = await like.update(id, req.body);
-    res.status(200).send(data);
-  } catch (err) {
-    next(err);
-  }
-}
-
-module.exports.delete = async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const data = await like.delete(id);
-    res.status(200).send({ message: 'Successfully'});
-  } catch (err) {
+      const data = await like.list(req.query)
+      res.status(200).send(data);
+    } catch (err) {
     next(err);
   }
 }

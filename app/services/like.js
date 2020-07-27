@@ -10,35 +10,17 @@ module.exports.create = (body) => {
   });
 };
 
-module.exports.list = (query) => {
+module.exports.detail = (query, isPopulate = false) => {
   return new Promise((resolve, reject) => {
-    // find properties by user
-    Like.find(query, (err, data) => {
-      if (err) return reject(err);
-      resolve(_.map(data, (item) => convertData(item)));
-    });
-  });
-};
-
-module.exports.detail = (id, isUser = false) => {
-  return new Promise((resolve, reject) => {
-      let user = Like.findById(id)
-      if (isUser) {
-        user = Like.findById(id).populate('user')
+      let user = Like.find(query)
+      if (isPopulate) {
+        user = Like.find(query).populate('user')
       }
       user.exec((err, data) => {
         if (err) return reject(err);
-        resolve(convertData(data));
+        const [ value ] = data
+        resolve(convertData(value));
       });
-  });
-};
-
-module.exports.update = (id, body) => {
-  return new Promise((resolve, reject) => {
-    Like.findByIdAndUpdate(id, body, { new: true }, (err, data) => {
-      if (err) return reject(err);
-      resolve(convertData(data));
-    });
   });
 };
 
@@ -47,6 +29,19 @@ module.exports.delete = (id) => {
     Like.findByIdAndDelete(id, (err, data) => {
       if (err) return reject(err);
       resolve(convertData(data));
+    });
+  });
+};
+
+module.exports.list = query => {
+  return new Promise((resolve, reject) => {
+    let userQuery = Like.find(query)
+    userQuery.exec(query, (err, res) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(res.map(item => convertData(item)));
     });
   });
 };
