@@ -32,6 +32,19 @@ const contact = require("./contact");
 const contactValidate = require("./contact/validate");
 router.post("/contact", contactValidate.findOne, contact.findOne)
 
+// add like
+const like = require("./like")
+const likeValidate = require("./like/validate");
+router.post("/like", Token, likeValidate.create, like.create)
+router.get("/like", like.list)
+
+// add share
+const share = require("./share")
+const shareValidate = require("./share/validate");
+router.get("/share", share.count)
+router.post("/share", shareValidate.create, share.create)
+
+
 
 const dialogflow = require("./dialogflow");
 router.post("/dialogflow", dialogflow);

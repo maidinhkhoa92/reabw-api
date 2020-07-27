@@ -1,4 +1,5 @@
 const contact = require('../../services/contact')
+const property = require('../../services/property')
 const { validationResult } = require("express-validator");
 
 module.exports.findOne = async (req, res, next) => {
@@ -8,12 +9,17 @@ module.exports.findOne = async (req, res, next) => {
     return;
   }
   try {
-    const exisEmail = await contact.find(req.body.email, req.query);
-    if (!exisEmail) {
-        data = await contact.create(req.body);
-    } 
-    await contact.sendEmail(req.body, exisEmail.property);
-    res.status(200).send(exisEmail);
+    // email of Consumer is existed?
+    const data = await contact.find(req.body.email);
+    // get Property 
+    const Property = await property.detail(req.body.property, true);
+
+    // send to Email of User
+    await contact.sendEmail(Property.user, Property);
+    if (!data) {
+        const value = await contact.create(req.body);
+        res.status(200).send(value);
+    } else {res.status(200).send(data);}
   } catch (err) {
     next(err);
   }
